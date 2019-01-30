@@ -17,7 +17,6 @@ services:
       context: ./envoy
       args:
         agent_key: ${agent_key}
-        sensor_version: ${sensor_version}
     volumes:
       - ./envoy/envoy-gateway.yaml:/etc/envoy-gateway.yaml
     networks:
