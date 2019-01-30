@@ -1,0 +1,58 @@
+# Original from envoyproject/envoy:examples/front-proxy/envoy-gateway.yaml
+# Modified by Instana:
+# - add tracing configuration for libinstana_sensor.so
+static_resources:
+
+  listeners:
+  - address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 8000
+    filter_chains:
+    - filters:
+      - name: envoy.http_connection_manager
+        config:
+          tracing:
+            operation_name: egress
+          codec_type: auto
+          stat_prefix: ingress_http
+          route_config:
+            name: local_route
+            virtual_hosts:
+            - name: backend
+              domains:
+              - "*"
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: service
+          http_filters:
+          - name: envoy.router
+            config: {}
+
+  clusters:
+  - name: service
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: round_robin
+#    http2_protocol_options: {}
+    hosts:
+    - socket_address:
+        address: service
+        port_value: 8080
+
+admin:
+  access_log_path: "/dev/null"
+  address:
+    socket_address:
+      address: 0.0.0.0
+      port_value: 8001
+
+tracing:
+  http:
+    name: envoy.dynamic.ot
+    config:
+      library: /usr/local/lib/libinstana_sensor.so
+      config:
+        service: envoy-gateway
