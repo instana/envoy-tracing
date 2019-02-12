@@ -1,7 +1,7 @@
 # Original from envoyproject/envoy:examples/front-proxy/docker-compose.yml
 # Modified by Instana:
 # - use instana-opentracing dockerfiles
-version: '2'
+version: '3'
 services:
 
   client-app:
@@ -10,6 +10,7 @@ services:
     networks:
       - envoymesh
     environment:
+      - INSTANA_DEV=1
       - target_url=http://envoy-gateway:8000/envoy-demo
 
   envoy:
@@ -24,6 +25,7 @@ services:
         aliases:
           - envoy-gateway
     environment:
+      - INSTANA_DEV=1
       - INSTANA_AGENT_HOST=instana-agent
       - INSTANA_AGENT_PORT=42699
     expose:
@@ -38,6 +40,7 @@ services:
         aliases:
           - service
     environment:
+      - INSTANA_DEV=1
       - INSTANA_AGENT_HOST=instana-agent
       - INSTANA_AGENT_PORT=42699
       - SERVER_PORT=8080
@@ -58,10 +61,10 @@ services:
         aliases:
           - instana-agent
     environment:
-      - INSTANA_AGENT_ENDPOINT=${agent_endpoint}
-      - INSTANA_AGENT_ENDPOINT_PORT=443
-      - INSTANA_AGENT_KEY=${agent_key}
-      - INSTANA_AGENT_ZONE=envoy-tracing-demo
+      - INSTANA_AGENT_ENDPOINT=${agent_endpoint:?No agent endpoint provided}
+      - INSTANA_AGENT_ENDPOINT_PORT=${agent_endpoint_port:-443}
+      - INSTANA_AGENT_KEY=${agent_key:?No agent key provided}
+      - INSTANA_AGENT_ZONE=${agent_zone:-envoy-tracing-demo}
     expose:
       - "42699"
 
