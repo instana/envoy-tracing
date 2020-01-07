@@ -56,3 +56,38 @@ After the agent is bootstrapped and starts accepting spans from Envoy, the resul
 ## Setup an Application Perspective for the Demo
 
 The simplest way is just to assign to the agent a unique zone (the `docker-compose.yml` file comes with the pre-defined `envoy-tracing-demo`), and simply create the application to contain all calls with the `agent.zone` tag to have the value `envoy-tracing-demo`.
+
+## Released Binaries
+
+**Link**: https://artifact-public.instana.io/artifactory/shared/com/instana/libinstana_sensor/<br/>
+**Credentials**: `_:${agent_key}`
+
+Only `linux-amd64-libinstana_sensor.so` is required on Linux distributions using glibc. For musl libc, there is the module `linux-amd64-musl-libinstana_sensor.so`.
+
+Since version 0.6.0, there are additional modules for Nginx tracing as Nginx does not come with OpenTracing support by default. Those can be ignored for Envoy tracing.
+
+## Release History
+
+### 0.7.0 (2020-01-02)
+
+   * logging `libinstana_sensor` version upon module load
+      * information gathering for better support
+   * added timestamps and prefix "[lis]" to log messages for better debugging
+   * added pid to log messages
+   * enforcing IPv4 in agent host name resolution
+      * avoiding failure due to IPv6 address for same host name
+   * implemented a new discovery request format
+      * requiring the C++ sensor 1.1.0 agent part for faster agent connection
+   * reworked the agent connection/discovery to quickly connect
+      * if no agent host is configured, then the gateway is checked first
+   * only logging an error if connections to all agent host candidates fail
+      * converted misleading error message upon failure of first candidate
+   * increased span flushing interval from 5s to 1s
+
+### 0.6.0 (2019-09-06)
+
+   * no changes relevant to Envoy tracing
+
+### 0.5.4 (2019-03-20)
+
+   * initial public release
