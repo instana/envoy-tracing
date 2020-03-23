@@ -68,6 +68,13 @@ Since version 0.6.0, there are additional modules for Nginx tracing as Nginx doe
 
 ## Release History
 
+### 0.8.0-rc1 (2020-03-18)
+
+   * This release is for **Instana QA only**.
+   * made MaxBufferedSpans configurable (default 1000)
+      * added "max_buffered_spans" JSON config entry
+   * added EUM handling for NGINX tracing only
+
 ### 0.7.0 (2020-01-02)
 
    * logging `libinstana_sensor` version upon module load
