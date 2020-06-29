@@ -64,16 +64,23 @@ The simplest way is just to assign to the agent a unique zone (the `docker-compo
 
 Only `linux-amd64-libinstana_sensor.so` is required on Linux distributions using glibc. For musl libc, there is the module `linux-amd64-musl-libinstana_sensor.so`.
 
-Since version 0.6.0, there are additional modules for Nginx tracing as Nginx does not come with OpenTracing support by default. Those can be ignored for Envoy tracing.
+Since version 0.6.0, there are additional modules for NGINX tracing as NGINX does not come with OpenTracing support by default. Those can be ignored for Envoy tracing.
 
 ## Release History
 
-### 0.8.0-rc1 (2020-03-18)
+### 1.0.0 (2020-06-26)
 
-   * This release is for **Instana QA only**.
-   * made MaxBufferedSpans configurable (default 1000)
-      * added "max_buffered_spans" JSON config entry
+   * added support for secrets in URLs configured by the agent
+   * added support for hiding synthetic calls
+
+### 0.8.0 (2020-03-30)
+
+   * made MaxBufferedSpans configurable (default `1000`)
+      * added `max_buffered_spans` JSON config entry
    * added EUM handling for NGINX tracing only
+   * handling correlation part of extended `X-INSTANA-L` header for mobile EUM
+   * HTTP extra headers are captured also in root spans
+      * requires an Instana backend update (v174) for those heads to be matched by the `call.http.header` filter
 
 ### 0.7.0 (2020-01-02)
 
