@@ -68,6 +68,10 @@ Since version 0.6.0, there are additional modules for NGINX tracing as NGINX doe
 
 ## Release History
 
+### 1.1.0 (2020-07-31)
+
+   * fixed the agent discovery if `/proc/$pid/sched` (`CONFIG_SCHED_DEBUG`) is not available
+
 ### 1.0.0 (2020-06-26)
 
    * added support for secrets in URLs configured by the agent
