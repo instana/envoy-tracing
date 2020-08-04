@@ -18,6 +18,7 @@ services:
       context: ./envoy
       args:
         agent_key: ${agent_key}
+        download_key: ${download_key}
     volumes:
       - ./envoy/envoy-gateway.yaml:/etc/envoy-gateway.yaml
     networks:
@@ -48,7 +49,7 @@ services:
       - "8080"
 
   agent:
-    image: instana/agent
+    image: containers.instana.io/instana/release/agent/static
     pid: "host"
     privileged: true
     volumes:
