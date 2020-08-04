@@ -1,0 +1,7 @@
+.env*
+.classpath
+.project
+org.eclipse*
+
+.DS_Store
+.idea/
