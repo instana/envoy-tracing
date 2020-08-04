@@ -4,21 +4,24 @@ RUN set -x \
     && apt-get update \
     && apt-get install --no-install-recommends --no-install-suggests -y lynx curl ca-certificates gnupg2 unzip
 
+ARG agent_key
 ARG download_key
 ARG nginx_version
 # For Alpine-based images, change the following to 'musl'
 ARG libc_version=glibc
 
+ENV INSTANA_AGENT_KEY=${agent_key}
 ENV INSTANA_DOWNLOAD_KEY=${download_key}
 ENV LIBC_VERSION=${libc_version}
 ENV ARTI_PATH='https://artifact-public.instana.io/artifactory/shared/com/instana/libinstana_sensor/'
 
 # Download extension from Artifactory
-RUN echo "Using download key ${INSTANA_DOWNLOAD_KEY}; LIBC version: ${LIBC_VERSION}"; \ 
-    sensor_version=$(lynx -auth _:${INSTANA_DOWNLOAD_KEY} -dump -listonly ${ARTI_PATH} | grep -o 'https:.*/[0-9]\+\.[0-9]\+\.[0-9]\+/' | rev | cut -d '/' -f 2 | rev | sort -V | tail -n1); \
+RUN key=$([ -n "${INSTANA_DOWNLOAD_KEY}" ] && echo "${INSTANA_DOWNLOAD_KEY}" || echo "${INSTANA_AGENT_KEY}"); \
+    echo "Using download key ${key}; LIBC version: ${LIBC_VERSION}"; \ 
+    sensor_version=$(lynx -auth _:${key} -dump -listonly ${ARTI_PATH} | grep -o 'https:.*/[0-9]\+\.[0-9]\+\.[0-9]\+/' | rev | cut -d '/' -f 2 | rev | sort -V | tail -n1); \
     echo "Using sensor version ${sensor_version}"; \
     mkdir -p /opt/instana/envoy ; \
-    curl --fail --user _:${INSTANA_DOWNLOAD_KEY} --silent --output /opt/instana/envoy/libinstana_sensor.so ${ARTI_PATH}/${sensor_version}/linux-amd64-libinstana_sensor.so
+    curl --fail --user _:${key} --silent --output /opt/instana/envoy/libinstana_sensor.so ${ARTI_PATH}/${sensor_version}/linux-amd64-libinstana_sensor.so
 
 FROM envoyproxy/envoy:v1.14.4
 
