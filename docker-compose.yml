@@ -18,6 +18,7 @@ services:
       context: ./envoy
       args:
         agent_key: ${agent_key}
+        download_key: ${download_key}
     volumes:
       - ./envoy/envoy-gateway.yaml:/etc/envoy-gateway.yaml
     networks:
