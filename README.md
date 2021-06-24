@@ -8,6 +8,10 @@ This repository contains a technology preview for Instana's [Envoy](https://www.
 
 We reserve ourselves the right to make it better and easier before releasing the functionality for General Availability.
 
+## Supported Versions
+
+The distributed tracing is compatible with Envoy Proxy versions 1.12 and 1.13. It is currently incompatible with versions 1.14 and above.
+
 ## Prerequisites
 
 A `docker-compose` installation running on your machine. This demo has been created and tested on Mac OS X with `docker-compose` and `docker-machine`.
