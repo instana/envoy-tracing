@@ -30,14 +30,6 @@ agent_zone=<name of the zone for the agent; default: envoy-tracing-demo>
 ## Build
 
 ```bash
-pushd client-app
-./mvnw clean package
-popd
-
-pushd server-app
-./mvnw clean package
-popd
-
 docker-compose build
 ```
 
