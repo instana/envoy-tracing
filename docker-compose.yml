@@ -38,7 +38,7 @@ services:
     networks:
       envoymesh:
         aliases:
-          - service
+          - server-app
     environment:
       - INSTANA_DEV=1
       - INSTANA_AGENT_HOST=instana-agent
