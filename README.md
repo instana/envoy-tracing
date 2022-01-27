@@ -2,67 +2,85 @@
 
 This repository contains a technology preview for Instana's [Envoy](https://www.envoyproxy.io/) tracing functionality.
 
-## Disclaimer
-
-*Instana Envoy tracing is currently a technology preview.*
-
-We reserve ourselves the right to make it better and easier before releasing the functionality for General Availability.
-
 ## Supported Versions
 
-The distributed tracing is compatible with Envoy Proxy versions 1.12 and 1.13. It is currently incompatible with versions 1.14 and above.
+The distributed tracing is compatible with Envoy Proxy versions 1.15 and above.
 
 ## Prerequisites
 
-A `docker-compose` installation running on your machine. This demo has been created and tested on Mac OS X with `docker-compose` and `docker-machine`.
+A `docker-compose` installation running on your machine. This demo has been created and tested on Mac OS 
+and RHEL with `docker-compose` and `docker-machine`.
 
 ## Configure
 
-Create a `.env` file in the root of the checked-out version of this repository and enter the following text, with the values adjusted as necessary:
+Create a `.env` file in the root of the checked-out version of this repository and enter the following content. 
+The values need to be adjusted to your environment.
 
 ```text
-agent_key=<TODO FILL UP>
+agent_key=<agent secret key>
+agent_zone=<name of the zone for the agent; default: envoy-tracing-demo>
 agent_endpoint=<local ip or remote host; e.g., saas-us-west-2.instana.io>
 agent_endpoint_port=<443 already set as default; or 4443 for local>
-agent_zone=<name of the zone for the agent; default: envoy-tracing-demo>
 ```
 
-## Build
+In most scenarios only the field `agent_key` and `agent_endpoint` are required.  
+
+## Build & Launch
 
 ```bash
 docker-compose build
-```
-
-## Launch
-
-```bash
 docker-compose up
 ```
 
-This will build and launch
-
+This will build and launch the following components:
 - `client-app` service, a simple Spring Boot application that issues a request every second to the ...
 - `envoy` service, which routes all incoming requests to the ...
 - `server-app` service, a simple Spring Boot application that returns `200` to any HTTP request.
 
-After the agent is bootstrapped and starts accepting spans from Envoy, the resulting traces in the Analyze view will look like the following:
+After the agent is bootstrapped and starts accepting spans from Envoy, the resulting traces in the Analyze view will 
+look like this:
 
 ![Demo traces in the Analyze view](images/trace-view.png)
 
-## Setup an Application Perspective for the Demo
+## Create an Application Perspective for the Demo
 
-The simplest way is just to assign to the agent a unique zone (the `docker-compose.yml` file comes with the pre-defined `envoy-tracing-demo`), and simply create the application to contain all calls with the `agent.zone` tag to have the value `envoy-tracing-demo`.
+To view all calls in its own application, create a new *Application Perspective* from the *Application* menu
+with a filter for the agent zone (`agent.zone`). The filter value must be the value of the `agent_zone` from
+the `.env` file. If `agent_zone` is not set, it defaults to `envoy-tracing-demo`.
 
 ## Released Binaries
 
 **Link**: https://artifact-public.instana.io/artifactory/shared/com/instana/libinstana_sensor/<br/>
 **Credentials**: `_:${agent_key}`
 
-Only `linux-amd64-libinstana_sensor.so` is required on Linux distributions using glibc. For musl libc, there is the module `linux-amd64-musl-libinstana_sensor.so`.
-
-Since version 0.6.0, there are additional modules for NGINX tracing as NGINX does not come with OpenTracing support by default. Those can be ignored for Envoy tracing.
+Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
+
+### 1.5.0 (2022-02-17)
+
+   * add support for Envoy 1.15 and greater
+
+### 1.4.0 (2022-02-14)
+
+   * drop support for Envoy 1.13 and below in new releases
+
+### 1.3.0 (2021-12-09)
+
+   * dropped initial wait time of 10s before connecting to the Instana agent
+   * now dropping all spans if the agent connection is not established
+       * avoiding too delayed spans
+       * avoiding using wrongs secrets configuration
+   * reduced the interval to poll the answering Instana agent from 30s to 5s
+       * faster agent connection
+
+### 1.2.3 (2021-11-11)
+
+   * now storing trace and span IDs as hex strings internally resulting in better debug output
+
+### 1.2.0 (2021-10-14)
+
+   * fixed handling of requests where `X-INSTANA-L` is set to zero
 
 ### 1.1.0 (2020-07-31)
 
