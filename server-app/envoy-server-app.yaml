@@ -1,3 +1,5 @@
+# Based on: https://github.com/envoyproxy/envoy/tree/main/examples/front-proxy
+# Modification by Instana: add tracing configuration for libinstana_sensor.so
 static_resources:
 
   listeners:
@@ -30,7 +32,7 @@ static_resources:
               name: envoy.tracers.dynamic_ot
               typed_config:
                 "@type": type.googleapis.com/envoy.config.trace.v3.DynamicOtConfig
-                library: /opt/server-app/libinstana_sensor.so
+                library: /opt/server-app/libcxx-libinstana_sensor.so
                 config:
                   service: envoy-server-app
 
