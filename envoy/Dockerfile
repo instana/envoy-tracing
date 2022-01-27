@@ -1,21 +1,28 @@
 # Original from envoyproject/envoy:examples/front-proxy/Dockerfile-frontenvoy
 FROM envoyproxy/envoy:v1.21-latest
 
-RUN set -x \
-  && apt-get update \
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
   && apt-get install --no-install-recommends --no-install-suggests -y \
-              curl apt-transport-https iproute2 \
-  && apt-get install --no-install-recommends --no-install-suggests -y lynx
+    wget \
+    ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 
-ARG agent_key
-
-ENV INSTANA_AGENT_KEY=${agent_key}
+WORKDIR /opt/envoy/
 
 # download latest libinstana_sensor from artifactory
-RUN sensor_version=$(lynx -auth _:${INSTANA_AGENT_KEY} -dump -listonly https://artifact-public.instana.io/artifactory/shared/com/instana/libinstana_sensor/ | grep -o 'https:.*/[0-9]\+\.[0-9]\+\.[0-9]\+/' | rev | cut -d '/' -f 2 | rev | sort -V | tail -n1); \
-    curl --user _:${INSTANA_AGENT_KEY} --silent --output /usr/local/lib/libinstana_sensor.so https://artifact-public.instana.io/artifactory/shared/com/instana/libinstana_sensor/${sensor_version}/linux-amd64-libinstana_sensor.so
+ARG agent_key
+ARG download_key
+ENV ARTI_PATH='https://artifact-public.instana.io/artifactory/shared/com/instana/libinstana_sensor/' \
+    INSTANA_DOWNLOAD_KEY=${download_key} \
+    INSTANA_AGENT_KEY=${agent_key}
 
-ADD ./start-gateway.sh /usr/local/bin/start-gateway.sh
-RUN chmod u+x /usr/local/bin/start-gateway.sh
+RUN access_key=$([ ! -z "${INSTANA_DOWNLOAD_KEY}" ] && echo "${INSTANA_DOWNLOAD_KEY}" || echo "${INSTANA_AGENT_KEY}") \
+    && wget --user _ --password ${access_key} --output-document=./list.html ${ARTI_PATH} \
+    && sensor_version=$(grep -o "href=\"[0-9]\+\.[0-9]\+\.[0-9]\+/\"" ./list.html | tail -n1 | cut -d'"' -f2) \
+    && echo "Using sensor version ${sensor_version}" \
+    && wget --user _ --password ${access_key} --output-document=./libcxx-libinstana_sensor.so ${ARTI_PATH}${sensor_version}linux-amd64-libcxx-libinstana_sensor.so
 
-ENTRYPOINT /usr/local/bin/start-gateway.sh
+COPY ./start-gateway.sh ./envoy-gateway.yaml ./
+
+CMD ["./start-gateway.sh"]

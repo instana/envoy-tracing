@@ -1,6 +1,3 @@
-# Original from envoyproject/envoy:examples/front-proxy/docker-compose.yml
-# Modified by Instana:
-# - use instana-opentracing dockerfiles
 version: '3'
 services:
 
@@ -18,6 +15,7 @@ services:
       context: ./envoy
       args:
         agent_key: ${agent_key}
+        download_key: ${download_key}
     volumes:
       - ./envoy/envoy-gateway.yaml:/etc/envoy-gateway.yaml
     networks:
@@ -35,6 +33,9 @@ services:
   server-app:
     build:
       context: ./server-app
+      args:
+        agent_key: ${agent_key}
+        download_key: ${download_key}
     networks:
       envoymesh:
         aliases:
