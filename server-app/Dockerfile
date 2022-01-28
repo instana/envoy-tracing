@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim AS evnoy-tracing-server-app-build
+FROM openjdk:11-jdk-slim AS envoy-tracing-server-app-build
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
@@ -39,8 +39,8 @@ VOLUME /tmp
 WORKDIR /opt/server-app/
 
 ARG jar_file=target/server-app-1.0.0.RELEASE.jar
-COPY --from=evnoy-tracing-server-app-build /opt/server-app/${jar_file} ./app.jar
-COPY --from=evnoy-tracing-server-app-build /opt/server-app/libcxx-libinstana_sensor.so ./
+COPY --from=envoy-tracing-server-app-build /opt/server-app/${jar_file} ./app.jar
+COPY --from=envoy-tracing-server-app-build /opt/server-app/libcxx-libinstana_sensor.so ./
 
 COPY ./start-server-app.sh ./envoy-server-app.yaml ./
 ENTRYPOINT ["./start-server-app.sh"]
