@@ -60,11 +60,11 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ### 1.5.0 (2022-02-17)
 
-   * add support for Envoy 1.15 and greater
+   * added support for Envoy 1.15 and greater
 
-### 1.4.0 (2022-02-14)
+### 1.4.0 (2022-02-04)
 
-   * drop support for Envoy 1.13 and below in new releases
+   * dropped support for Envoy 1.13 and below in new releases
 
 ### 1.3.0 (2021-12-09)
 
