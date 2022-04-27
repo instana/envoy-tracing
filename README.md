@@ -58,6 +58,11 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.6.0 (2022-04-26)
+
+   * Consolidate build system and CI/CD pipelines
+   * Changed log level for ignored JSON fields in discovery response from warn to debug
+
 ### 1.5.0 (2022-02-17)
 
    * added support for Envoy 1.15 and greater
