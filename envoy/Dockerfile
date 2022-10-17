@@ -1,5 +1,5 @@
 # Original from envoyproject/envoy:examples/front-proxy/Dockerfile-frontenvoy
-FROM envoyproxy/envoy:v1.21-latest
+FROM envoyproxy/envoy:v1.22-latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
