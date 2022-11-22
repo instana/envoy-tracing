@@ -18,13 +18,15 @@ The values need to be adjusted to your environment.
 
 ```text
 agent_key=<agent secret key>
-download_key=<download secret key>
+download_key=<download secret key (optional agent key with download privileges)>
 agent_zone=<name of the zone for the agent; default: envoy-tracing-demo>
-agent_endpoint=<local ip or remote host; e.g., saas-us-west-2.instana.io>
+agent_endpoint=<local ip or remote host; e.g. ingress-red-saas.instana.io>
 agent_endpoint_port=<443 already set as default; or 4443 for local>
 ```
 
 In most scenarios only the field `agent_key` and `agent_endpoint` are required.  
+
+A template [.env.template](.env.template) can be copied to `.env` for your convenience.
 
 ## Build & Launch
 
