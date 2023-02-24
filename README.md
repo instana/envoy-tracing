@@ -60,6 +60,10 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.8.0 (2023-02-23)
+
+  * Release W3C trace context support
+
 ### 1.7.1 (2022-06-29)
 
   * Fix discovery response bug when tracing section contains additional
