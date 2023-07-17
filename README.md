@@ -60,6 +60,10 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.8.2 (2023-07-17)
+
+  * Tested support for envoy-proxy v1.26.1
+
 ### 1.8.0 (2023-02-23)
 
   * Release W3C trace context support
