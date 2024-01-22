@@ -60,6 +60,11 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.8.3 (2024-01-22)
+
+  * Security fixes: strlen security fix, fix for CVE-2023-46137 
+  * CI/CD pipelines: consolidate proactive support and sonarqube coverage
+
 ### 1.8.0 (2023-02-23)
 
   * Release W3C trace context support
