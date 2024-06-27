@@ -1,10 +1,14 @@
 # Instana Envoy Tracing Demo
 
-This repository contains a technology preview for Instana's [Envoy](https://www.envoyproxy.io/) tracing functionality.
+This repository demonstrates Instana's [Envoy Proxy](https://www.envoyproxy.io/) tracing functionality
+based on [OpenTracing](https://github.com/opentracing/opentracing-cpp).
 
 ## Supported Versions
 
-The distributed tracing is compatible with Envoy Proxy versions 1.15 and above.
+Envoy Proxy versions 1.15 until 1.29 are supported by the distributed tracing based on OpenTracing.
+
+With Envoy version 1.30 onwards, tracing is based on [OpenTelemetry](https://opentelemetry.io/docs/languages/cpp/).
+There will be a demonstration repository [envoy-otel-tracing](https://github.com/instana/envoy-tracing) soon.
 
 ## Prerequisites
 
