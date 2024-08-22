@@ -67,7 +67,7 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ### 1.9.0 (2024-03-07)
 
-  * New Feature: support of INSTANA_LOG_LEVEL
+  * New Feature: support of `INSTANA_LOG_LEVEL`
 
 ### 1.8.3 (2024-01-22)
 
