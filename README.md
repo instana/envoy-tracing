@@ -65,6 +65,10 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.9.1 (2024-08-22)
+
+  * [Minor] Add a script to build Envoy libinstana sensor locally.
+
 ### 1.9.0 (2024-03-07)
 
   * New Feature: support of `INSTANA_LOG_LEVEL`
