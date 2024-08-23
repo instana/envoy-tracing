@@ -65,9 +65,13 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.9.1 (2024-08-22)
+
+  * No changes regarding Envoy Proxy tracing
+
 ### 1.9.0 (2024-03-07)
 
-  * New Feature: support of INSTANA_LOG_LEVEL
+  * New Feature: support of `INSTANA_LOG_LEVEL`
 
 ### 1.8.3 (2024-01-22)
 
