@@ -65,6 +65,15 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.11.0 (2025-01-21)
+
+  * Add support for envoy-proxy 1.32.2 1.32.3 and 1.33.0
+  * Removed the agent header check for the `Server` header in the discovery response.
+
+### 1.10.0 (2024-10-14)
+
+  * No changes regarding Envoy Proxy tracing
+
 ### 1.9.1 (2024-08-22)
 
   * No changes regarding Envoy Proxy tracing
