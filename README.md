@@ -65,6 +65,14 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.11.0 (2025-01-21)
+
+  * The discovery response is not checked for the agent header `Server` anymore.
+
+### 1.10.0 (2024-10-14)
+
+  * No changes regarding Envoy Proxy tracing
+
 ### 1.9.1 (2024-08-22)
 
   * No changes regarding Envoy Proxy tracing
