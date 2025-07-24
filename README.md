@@ -64,6 +64,10 @@ Only `linux-amd64-libcxx-libinstana_sensor.so` is required.
 
 ## Release History
 
+### 1.12.0 (2025-07-23)
+
+  * Migrate build system to Debian 11 due to Ubuntu 20.04 EOL
+
 ### 1.11.0 (2025-01-21)
 
   * The discovery response is not checked for the agent header `Server` anymore.
